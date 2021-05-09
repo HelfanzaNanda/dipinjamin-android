@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
     app:cardCornerRadius="8dp"
+    android:clickable="true"
+    android:layout_margin="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusable="true">
 
 
     <LinearLayout
+        android:gravity="center"
+        android:padding="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/book_image"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:layout_marginBottom="4dp"
             android:src="@color/design_default_color_error"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_width="100dp"
+            android:layout_height="120dp"/>
 
         <TextView
+            android:maxLines="1"
             android:id="@+id/book_name"
             android:layout_marginBottom="4dp"
             android:gravity="center"
             android:text="Bumi"
             android:textStyle="bold"
-            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -35,9 +40,10 @@
             android:backgroundTint="@color/donker"
             android:layout_gravity="center"
             android:text="@string/detail"
+            android:textSize="11sp"
             app:cornerRadius="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="70dp"
+            android:layout_height="35dp"/>
 
 
     </LinearLayout>

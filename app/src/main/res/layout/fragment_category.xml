@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/light_grey"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -10,7 +11,7 @@
         android:id="@+id/toolbar_category"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:title="Category" />
+        app:title="Kategori Buku" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_margin="8dp"
@@ -20,4 +21,9 @@
         android:layout_height="wrap_content"/>
 
 
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

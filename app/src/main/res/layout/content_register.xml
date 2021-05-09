@@ -62,11 +62,30 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/error_password"
+        android:hint="Konfirmasi Password"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:errorEnabled="true"
+        app:passwordToggleEnabled="true"
+        android:id="@+id/error_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/input_confirm_password"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.button.MaterialButton
         android:layout_marginBottom="15dp"
-        android:shadowRadius="8dp"
+        android:shadowRadius="8"
         android:backgroundTint="@color/grey"
-        android:layout_below="@id/error_password"
+        android:layout_below="@id/error_confirm_password"
         android:id="@+id/btn_register"
         app:cornerRadius="6dp"
         android:text="daftar"
@@ -176,5 +195,11 @@
 
     </LinearLayout>
 
+
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

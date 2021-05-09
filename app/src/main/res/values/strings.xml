@@ -110,4 +110,15 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="text_faq">Dengan mendaftar, saya menyetujui Syarat dan Ketentuan serta Kebijakan Privasi</string>
     <string name="title_activity_book">BookActivity</string>
+    <string name="success_register">silahkan cek email untuk verifikasi email</string>
+    <string name="title_category">Kategori</string>
+    <string name="title_cart">Cart</string>
+    <string name="title_mybook">My Book</string>
+    <string name="title_profile">Profile</string>
+    <string name="search_hint">Cari nama buku...</string>
+    <string name="key_new_book">Koleksi Buku Baru</string>
+    <string name="key_most_book">Koleksi Buku Terbanyak Terjual</string>
+    <string name="key_recommended_book">Koleksi Buku Rekomendasi</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="message_not_login">anda belum login, untuk melanjutkan anda harus login dahulu!</string>
 </resources>

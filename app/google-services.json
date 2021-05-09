@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "367230821258",
+    "project_id": "dipinjamin-569c4",
+    "storage_bucket": "dipinjamin-569c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367230821258:android:2fb437275b9cb7564e9e73",
+        "android_client_info": {
+          "package_name": "com.alfardev.dipinjamin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367230821258-n1b3r1erg0tq7tsf67jl3msbplbqfbfl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPLK9k_ts7VbrB5mscI3bhGWqLEe-uBZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367230821258-n1b3r1erg0tq7tsf67jl3msbplbqfbfl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -45,7 +45,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:layout_marginBottom="15dp"
-        android:shadowRadius="8dp"
+        android:shadowRadius="8"
         android:backgroundTint="@color/grey"
         android:layout_below="@id/error_password"
         android:id="@+id/btn_login"
@@ -178,5 +178,11 @@
 
     </LinearLayout>
 
+
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
