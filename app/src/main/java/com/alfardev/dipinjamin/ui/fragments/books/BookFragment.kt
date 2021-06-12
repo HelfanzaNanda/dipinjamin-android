@@ -1,31 +1,53 @@
 package com.alfardev.dipinjamin.ui.fragments.books
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alfardev.dipinjamin.R
 import com.alfardev.dipinjamin.models.Book
+import com.alfardev.dipinjamin.ui.create_update_book.CreateUpdateBookActivity
+import com.alfardev.dipinjamin.ui.login.LoginActivity
 import com.alfardev.dipinjamin.utils.Constants
-import com.alfardev.dipinjamin.utils.extensions.alertNotLogin
 import com.alfardev.dipinjamin.utils.extensions.gone
 import com.alfardev.dipinjamin.utils.extensions.showToast
 import com.alfardev.dipinjamin.utils.extensions.visible
 import kotlinx.android.synthetic.main.fragment_book.view.*
+import kotlinx.android.synthetic.main.unauthorized.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class BookFragment : Fragment(R.layout.fragment_book){
+class BookFragment : Fragment(){
 
     private val bookViewModel : BookViewModel by viewModel()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (isLoggedIn()){
+            return inflater.inflate(R.layout.fragment_book, container, false)
+        }
+        return inflater.inflate(R.layout.unauthorized, container, false)
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (isLoggedIn()){
             setUpRecycler()
             observe()
+            addBook()
         }else{
-            requireActivity().alertNotLogin(requireActivity(), getString(R.string.message_not_login))
+            requireView().btn_login.setOnClickListener {
+                startActivity(Intent(requireActivity(), LoginActivity::class.java).putExtra("EXPECT_RESULT", false))
+            }
+        }
+    }
+
+    private fun addBook(){
+        requireView().fab_add_book.setOnClickListener {
+            startActivity(Intent(requireActivity(), CreateUpdateBookActivity::class.java))
         }
     }
 
@@ -47,10 +69,16 @@ class BookFragment : Fragment(R.layout.fragment_book){
 
     private fun handleMyBooks(list: List<Book>?) {
         list?.let {
-            requireView().recycler_view.adapter?.let { adapter ->
-                if (adapter is BookAdapter) adapter.updateList(it)
+            if (it.isNotEmpty()){
+                requireView().layout_not_found.gone()
+                requireView().recycler_view.adapter?.let { adapter ->
+                    if (adapter is BookAdapter) adapter.updateList(it)
+                }
+            }else{
+                requireView().layout_not_found.visible()
             }
         }
+
     }
 
     private fun handleUiState(bookState: BookState?) {
@@ -67,9 +95,12 @@ class BookFragment : Fragment(R.layout.fragment_book){
     }
 
     private fun fetchMyBooks() = bookViewModel.fetchMyBooks(Constants.getToken(requireActivity()))
+    private fun sizeBooks() = bookViewModel.listenToMyBooks().value?.size
 
     override fun onResume() {
         super.onResume()
-        fetchMyBooks()
+        if (isLoggedIn()){
+            fetchMyBooks()
+        }
     }
 }

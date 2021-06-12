@@ -2,7 +2,9 @@ package com.alfardev.dipinjamin.utils
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 import java.text.NumberFormat
 import java.time.LocalDateTime
@@ -14,6 +16,7 @@ import java.util.regex.Pattern
 class Constants {
     companion object{
         const val END_POINT = "http://dipinjamin.alfara-dev.com/api/"
+        const val END_POINT_TERRITORY = "https://dev.farizdotid.com/api/daerahindonesia/"
 
 
         fun getToken(c : Context) : String {
@@ -53,5 +56,19 @@ class Constants {
 
         fun isAlpha(name : String) = Pattern.matches("[a-zA-Z]+", name)
 
+
+        fun getRealPathFromURI(context: Context, contentURI: Uri): String {
+            val result: String
+            val cursor = context.contentResolver.query(contentURI, null, null, null, null)
+            if (cursor == null) { // Source is Dropbox or other similar local file path
+                result = contentURI.path!!
+            } else {
+                cursor.moveToFirst()
+                val idx: Int = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                result = cursor.getString(idx)
+                cursor.close()
+            }
+            return result
+        }
     }
 }

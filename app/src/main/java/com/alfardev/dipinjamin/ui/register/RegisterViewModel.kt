@@ -3,7 +3,6 @@ package com.alfardev.dipinjamin.ui.register
 import androidx.lifecycle.ViewModel
 import com.alfardev.dipinjamin.models.User
 import com.alfardev.dipinjamin.repositories.FirebaseRepository
-import com.alfardev.dipinjamin.repositories.UserContract
 import com.alfardev.dipinjamin.repositories.UserRepository
 import com.alfardev.dipinjamin.utils.Constants
 import com.alfardev.dipinjamin.utils.SingleLiveEvent
@@ -17,8 +16,9 @@ class RegisterViewModel (private val userRepository: UserRepository,
     private fun toast(message: String){ state.value = RegisterState.ShowToast(message) }
     private fun alert(message: String){ state.value = RegisterState.ShowAlert(message) }
     private fun success(email: String) { state.value = RegisterState.Success(email) }
+    private fun successLoginGoogle(token: String){ state.value = RegisterState.SuccessLoginGoogle(token) }
 
-    fun validate(name: String, email: String, password: String, confirmPass: String) : Boolean {
+    fun validate(name: String, email: String, password: String, confirmPass: String, phone : String) : Boolean {
         state.value = RegisterState.Reset
         if (name.isEmpty()){
             state.value = RegisterState.Validate(name = "nama tidak boleh kosong")
@@ -60,8 +60,16 @@ class RegisterViewModel (private val userRepository: UserRepository,
             return false
         }
 
-        if(!confirmPass.equals(password)){
+        if(confirmPass != password){
             state.value = RegisterState.Validate(confirmPass = "konfirmasi password tidak cocok")
+            return false
+        }
+        if (phone.isEmpty()){
+            state.value = RegisterState.Validate(phone = "no telepon harus di isi")
+            return false
+        }
+        if (phone.length <= 10 || phone.length >= 13){
+            state.value = RegisterState.Validate(phone = "no telepon setidaknya 11 sampai 13 karakter")
             return false
         }
         return true
@@ -69,6 +77,7 @@ class RegisterViewModel (private val userRepository: UserRepository,
 
     fun register(user: User){
         isLoading(true)
+        generateTokenFirebase(user)
     }
 
     private fun generateTokenFirebase(user: User){
@@ -105,6 +114,40 @@ class RegisterViewModel (private val userRepository: UserRepository,
         })
     }
 
+    fun loginProvider(user: User){
+        isLoading(true)
+        firebaseRepository.generateToken(object : SingleResponse<String>{
+            override fun onSuccess(data: String?) {
+                data?.let {fcm_token ->
+                    sendLoginProvider(user, fcm_token)
+                }
+            }
+
+            override fun onFailure(err: Error) {
+                isLoading(false)
+                alert(err.message.toString())
+            }
+
+        })
+
+    }
+
+    private fun sendLoginProvider(user: User, fcm_token: String){
+        user.fcm = fcm_token
+        userRepository.loginProvider(user, object : SingleResponse<User>{
+            override fun onSuccess(data: User?) {
+                isLoading(false)
+                data?.let { successLoginGoogle(it.api_token!!) }
+            }
+
+            override fun onFailure(err: Error) {
+                isLoading(false)
+                alert(err.message.toString())
+            }
+
+        })
+    }
+
     fun listenToState() = state
 }
 
@@ -113,11 +156,13 @@ sealed class RegisterState{
     data class ShowToast(var message : String) : RegisterState()
     data class ShowAlert(var message : String) : RegisterState()
     data class Success(var email : String) : RegisterState()
+    data class SuccessLoginGoogle(var token : String) : RegisterState()
     data class Validate(
         var name : String? = null,
         var email : String? = null,
         var password : String? = null,
-        var confirmPass : String? = null
+        var confirmPass : String? = null,
+        var phone : String? = null
     ) : RegisterState()
     object Reset : RegisterState()
 }

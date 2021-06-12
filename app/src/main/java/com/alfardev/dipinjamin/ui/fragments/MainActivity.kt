@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.alfardev.dipinjamin.ui.fragments.carts.CartFragment
 import com.alfardev.dipinjamin.ui.fragments.categories.CategoryFragment
 import com.alfardev.dipinjamin.ui.fragments.home.HomeFragment
 import com.alfardev.dipinjamin.ui.fragments.profile.ProfileFragment
+import com.alfardev.dipinjamin.utils.extensions.showToast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         if(savedInstanceState == null){ navigation.selectedItemId = R.id.navigation_home }
         setupNotificationManager()
+        if (isLoggedIn()){
+            Toast.makeText(this, "Selamat datang ${getPassedUserName()!!}", Toast.LENGTH_LONG).show()
+        }
     }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -86,6 +91,8 @@ class MainActivity : AppCompatActivity() {
         true
     }
 
+    private fun isLoggedIn() = intent.getBooleanExtra("IS_LOGGED_IN", false)
+    private fun getPassedUserName() = intent.getStringExtra("USER_NAME")
     private fun setupNotificationManager(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)

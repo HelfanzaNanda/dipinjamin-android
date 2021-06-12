@@ -1,6 +1,5 @@
 package com.alfardev.dipinjamin.ui.books
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alfardev.dipinjamin.R
 import com.alfardev.dipinjamin.models.Book
+import com.alfardev.dipinjamin.utils.Constants
 import com.alfardev.dipinjamin.utils.extensions.gone
 import com.alfardev.dipinjamin.utils.extensions.showToast
 import com.alfardev.dipinjamin.utils.extensions.visible
@@ -66,20 +66,24 @@ class BookActivity : AppCompatActivity() {
     }
 
     private fun getPassedKeyBook() = intent.getStringExtra("BOOK")
+    private fun getPassedCategoryId() = intent.getIntExtra("CATEGORY_ID", 0)
     private fun fetchBooks() {
-        println(getPassedKeyBook())
         when {
             getPassedKeyBook() == getString(R.string.key_new_book) -> {
-                bookViewModel.new()
+                bookViewModel.new(Constants.getToken(this@BookActivity))
             }
             getPassedKeyBook() == getString(R.string.key_most_book) -> {
-                bookViewModel.most()
+                bookViewModel.most(Constants.getToken(this@BookActivity))
             }
             getPassedKeyBook() == getString(R.string.key_recommended_book) -> {
-                bookViewModel.recommended()
+                bookViewModel.recommended(Constants.getToken(this@BookActivity))
+            }
+            getPassedKeyBook() == getString(R.string.book_by_category) -> {
+                bookViewModel.fetchBooksByCategory(getPassedCategoryId())
             }
         }
     }
+
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

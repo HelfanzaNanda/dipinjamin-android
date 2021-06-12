@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/bottom_sheet"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/light_grey"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_height="match_parent"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <LinearLayout
+        android:layout_marginTop="66dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:layout_marginBottom="40dp"
+            android:text="Tambah Alamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="10dp"
+            android:hint="Nama"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorEnabled="true"
+            android:id="@+id/error_nama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/input_name"
+                android:inputType="textPersonName"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="10dp"
+            android:hint="No Hp"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorEnabled="true"
+            android:id="@+id/error_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/input_phone"
+                android:inputType="phone"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginBottom="6dp"
+                android:textSize="11sp"
+                android:text="Provinsi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="SmallSp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/provinsi_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginBottom="6dp"
+                android:textSize="11sp"
+                android:text="Kabupaten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="SmallSp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/kabupaten_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginBottom="6dp"
+                android:textSize="11sp"
+                android:text="Kecamatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="SmallSp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/kecamatan_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="10dp"
+            android:hint="Alamat"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorEnabled="true"
+            android:id="@+id/error_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/input_address"
+                android:inputType="textMultiLine"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="10dp"
+            android:hint="Kode Pos"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorEnabled="true"
+            android:id="@+id/error_kode_pos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/input_kode_pos"
+                android:inputType="number"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:backgroundTint="@color/grey"
+            android:id="@+id/btn_save"
+            android:text="simpan"
+            app:cornerRadius="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

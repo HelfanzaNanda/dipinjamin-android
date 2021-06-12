@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_centerInParent="true"
+        android:id="@+id/img_login"
+        android:src="@drawable/ic_undraw_waiting__for_you_ldha"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+
+    <TextView
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/img_login"
+        android:id="@+id/txt_accecc_denied"
+        android:textColor="@color/donker"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="Not Found"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textSize="11sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/donker"
+        android:layout_below="@id/txt_accecc_denied"
+        android:text="tidak ada data yang ditampilkan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+</RelativeLayout>

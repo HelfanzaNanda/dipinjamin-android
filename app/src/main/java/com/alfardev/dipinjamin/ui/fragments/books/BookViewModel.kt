@@ -14,7 +14,7 @@ class BookViewModel (private val bookRepository: BookRepository) : ViewModel(){
     private fun isLoading(b : Boolean){ state.value = BookState.Loading(b) }
     private fun toast(m : String){ state.value = BookState.ShowToast(m) }
 
-    fun fetchMyBooks(token : String){
+    fun fetchMyBooks(token : String) {
         isLoading(true)
         bookRepository.me(token, object : ArrayResponse<Book>{
             override fun onSuccess(datas: List<Book>?) {

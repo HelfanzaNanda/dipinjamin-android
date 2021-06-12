@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/light_grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/layout_not_found"
+        layout="@layout/not_found"
+        android:visibility="gone"/>
 
     <androidx.appcompat.widget.Toolbar
         app:titleTextColor="@color/white"
@@ -12,6 +18,8 @@
         android:layout_height="?attr/actionBarSize"
         app:title="Buku Saya" />
 
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_margin="8dp"
         android:layout_below="@id/toolbar_book"
@@ -20,7 +28,7 @@
         android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_add_book"
         android:backgroundTint="@color/donker"
         android:layout_width="wrap_content"
         app:tint="@android:color/white"

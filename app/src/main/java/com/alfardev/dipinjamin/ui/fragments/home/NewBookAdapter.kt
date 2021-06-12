@@ -1,6 +1,7 @@
 package com.alfardev.dipinjamin.ui.fragments.home
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.alfardev.dipinjamin.R
 import com.alfardev.dipinjamin.models.Book
+import com.alfardev.dipinjamin.ui.detail_book.DetailBookActivity
 import kotlinx.android.synthetic.main.list_item_home.view.*
 
 class NewBookAdapter (private val books : MutableList<Book>, private val context: Context)
@@ -24,9 +26,13 @@ class NewBookAdapter (private val books : MutableList<Book>, private val context
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         fun bind(book: Book, context: Context){
             with(itemView){
-                println(book.images[0].filename)
-                book_image.load(book.images[0].filename)
+                book_image.load(book.image)
                 book_name.text = book.title
+                setOnClickListener {
+                    context.startActivity(Intent(context, DetailBookActivity::class.java).apply {
+                        putExtra("BOOK_ID", book.id)
+                    })
+                }
             }
         }
     }

@@ -121,4 +121,38 @@
     <string name="key_recommended_book">Koleksi Buku Rekomendasi</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="message_not_login">anda belum login, untuk melanjutkan anda harus login dahulu!</string>
+    <string name="title_activity_update_password">UpdatePasswordActivity</string>
+    <string name="title_activity_update_profile">UpdateProfileActivity</string>
+    <string name="title_activity_management_address">ManagementAddressActivity</string>
+    <string name="text_management_address">Manajemen Alamat</string>
+    <string name="available">tersedia</string>
+    <string name="isnt_available">tidak tersedia</string>
+    <string name="google_provider">Google</string>
+    <string name="undefined">UNDEFINED</string>
+    <string name="title_activity_create_update_book">CreateUpdateBookActivity</string>
+    <string name="text_update_book">Update Buku</string>
+    <string name="text_create_book">Tambah Buku</string>
+    <string name="message_success_created_data">berhasil menambahkan data</string>
+    <string name="message_success_updated_data">Berhasil update data</string>
+    <string name="message_alert_logout">Apakah anda yakin ingin logout?</string>
+    <string name="choose_image">Pilih Gambar</string>
+    <string name="message_change_data">berhasil melakukan perubahan</string>
+    <string name="choose_kab">Pilih Kabupaten</string>
+    <string name="choose_province">Pilih Provinsi</string>
+    <string name="choose_kec">Pilih Kecamatan</string>
+    <string name="message_delete">apakah anda mau menghapus data ini?</string>
+    <string name="title_activity_checkout">CheckoutActivity</string>
+    <string name="success_delete">Berhasil delete</string>
+    <string name="are_you_sure">apakah anda yakin?</string>
+    <string name="pages">\" Halaman\"</string>
+    <string name="choose_address">Pilih Alamat</string>
+
+    <string-array name="durations">
+        <item>1 Minggu</item>
+        <item>2 Minggu</item>
+        <item>3 Minggu</item>
+        <item>1 Bulan</item>
+    </string-array>
+    <string name="title_activity_my_order">MyOrderActivity</string>
+    <string name="book_by_category">Buku By Kategori</string>
 </resources>

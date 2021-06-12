@@ -14,6 +14,11 @@ import retrofit2.Response
 interface UserContract{
     fun register(user: User, listener : SingleResponse<User>)
     fun login(email : String, password : String, fcm : String, listener: SingleResponse<User>)
+    fun loginProvider(user: User, listener : SingleResponse<User>)
+    fun currentUser(token :String, listener: SingleResponse<User>)
+    fun updatePassword(token: String, password: String, listener: SingleResponse<User>)
+    fun updateProfile(token: String, first_name : String, last_name : String, email: String, phone : String, listener: SingleResponse<User>)
+
 }
 
 class UserRepository (private val api : ApiService) : UserContract{
@@ -71,6 +76,91 @@ class UserRepository (private val api : ApiService) : UserContract{
                         }
                     }
                     else -> listener.onFailure(Error("masukkan email dan password yang benar"))
+                }
+            }
+
+        })
+    }
+
+    override fun loginProvider(user: User, listener: SingleResponse<User>) {
+        val g = GsonBuilder().create()
+        val json = g.toJson(user)
+        val b = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
+        api.loginProvider(b).enqueue(object : Callback<WrappedResponse<User>>{
+            override fun onFailure(call: Call<WrappedResponse<User>>, t: Throwable) {
+                listener.onFailure(Error(t.message))
+            }
+
+            override fun onResponse(
+                call: Call<WrappedResponse<User>>,
+                response: Response<WrappedResponse<User>>
+            ) {
+                when{
+                    response.isSuccessful -> listener.onSuccess(response.body()?.data)
+                    else -> listener.onFailure(Error(response.message()))
+                }
+            }
+
+        })
+    }
+
+    override fun currentUser(token: String, listener: SingleResponse<User>) {
+        api.currentUser(token).enqueue(object : Callback<WrappedResponse<User>>{
+            override fun onFailure(call: Call<WrappedResponse<User>>, t: Throwable) {
+                listener.onFailure(Error(t.message))
+            }
+
+            override fun onResponse(call: Call<WrappedResponse<User>>, response: Response<WrappedResponse<User>>) {
+                when{
+                    response.isSuccessful -> listener.onSuccess(response.body()!!.data)
+                    else -> listener.onFailure(Error(response.message()))
+                }
+            }
+
+        })
+    }
+
+    override fun updatePassword(token: String, password: String, listener: SingleResponse<User>) {
+        api.updatePassword(token, password).enqueue(object : Callback<WrappedResponse<User>>{
+            override fun onFailure(call: Call<WrappedResponse<User>>, t: Throwable) {
+                listener.onFailure(Error(t.message))
+            }
+
+            override fun onResponse(call: Call<WrappedResponse<User>>, response: Response<WrappedResponse<User>>) {
+                when{
+                    response.isSuccessful -> {
+                        val b = response.body()
+                        if (b?.status!!) {
+                            listener.onSuccess(b.data)
+                        }else{
+                            listener.onFailure(Error(b.message))
+                        }
+                    }
+                    else -> listener.onFailure(Error(response.message()))
+                }
+            }
+
+        })
+    }
+
+    override fun updateProfile(token: String, first_name: String, last_name: String,
+                               email: String, phone: String, listener: SingleResponse<User>) {
+        api.updateProfile(token, first_name, last_name, email, phone).enqueue(object : Callback<WrappedResponse<User>>{
+            override fun onFailure(call: Call<WrappedResponse<User>>, t: Throwable) {
+                listener.onFailure(Error(t.message))
+            }
+
+            override fun onResponse(call: Call<WrappedResponse<User>>, response: Response<WrappedResponse<User>>) {
+                when{
+                    response.isSuccessful -> {
+                        val b = response.body()
+                        if (b?.status!!) {
+                            listener.onSuccess(b.data)
+                        }else{
+                            listener.onFailure(Error(b.message))
+                        }
+                    }
+                    else -> listener.onFailure(Error(response.message()))
                 }
             }
 

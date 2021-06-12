@@ -15,9 +15,9 @@ class BookViewModel(private val bookRepository: BookRepository) : ViewModel() {
     private fun toast(m : String){ state.value = BookState.ShowToast(m) }
     private fun alert(m : String){ state.value = BookState.ShowAlert(m) }
 
-    fun new(){
+    fun new(token :String){
         isLoading(true)
-        bookRepository.new(object : ArrayResponse<Book> {
+        bookRepository.new(token, object : ArrayResponse<Book> {
             override fun onSuccess(datas: List<Book>?) {
                 isLoading(false)
                 datas?.let {
@@ -32,9 +32,9 @@ class BookViewModel(private val bookRepository: BookRepository) : ViewModel() {
         })
     }
 
-    fun most(){
+    fun most(token : String){
         isLoading(true)
-        bookRepository.most(object : ArrayResponse<Book> {
+        bookRepository.most(token, object : ArrayResponse<Book> {
             override fun onSuccess(datas: List<Book>?) {
                 isLoading(false)
                 datas?.let {
@@ -49,20 +49,34 @@ class BookViewModel(private val bookRepository: BookRepository) : ViewModel() {
         })
     }
 
-    fun recommended(){
+    fun recommended(token : String){
         isLoading(true)
-        bookRepository.recommended(object : ArrayResponse<Book> {
+        bookRepository.recommended(token, object : ArrayResponse<Book> {
             override fun onSuccess(datas: List<Book>?) {
                 isLoading(false)
-                datas?.let {
-                    books.postValue(it)
-                }
+                datas?.let { books.postValue(it) }
             }
 
             override fun onFailure(err: Error) {
                 isLoading(false)
                 toast(err.message.toString())
             }
+        })
+    }
+
+    fun fetchBooksByCategory(idCategory : Int){
+        isLoading(true)
+        bookRepository.fetchBooksByCategory(idCategory, object : ArrayResponse<Book>{
+            override fun onSuccess(datas: List<Book>?) {
+                isLoading(false)
+                datas?.let { books.postValue(it) }
+            }
+
+            override fun onFailure(err: Error) {
+                isLoading(false)
+                toast(err.message.toString())
+            }
+
         })
     }
 

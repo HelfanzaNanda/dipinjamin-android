@@ -24,7 +24,7 @@ class BookAdapter (private val books : MutableList<Book>, private val context: C
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         fun bind(book: Book, context: Context){
             with(itemView){
-                book_image.load(book.images[0].filename)
+                book_image.load(book.image)
                 book_name.text = book.title
             }
         }
