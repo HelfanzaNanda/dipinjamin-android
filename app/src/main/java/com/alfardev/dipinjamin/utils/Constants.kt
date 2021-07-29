@@ -56,6 +56,10 @@ class Constants {
 
         fun isAlpha(name : String) = Pattern.matches("[a-zA-Z]+", name)
 
+        fun isAlphaAndSpace(name : String) : Boolean {
+            return (!name.equals("") && Pattern.matches("\\p{L}+(?: \\p{L}+)*\$", name))
+        }
+
 
         fun getRealPathFromURI(context: Context, contentURI: Uri): String {
             val result: String

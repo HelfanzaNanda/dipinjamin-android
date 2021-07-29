@@ -44,7 +44,7 @@ class UserRepository (private val api : ApiService) : UserContract{
                             listener.onFailure(Error("maaf tidak bisa register, mungkin email sudah pernah di daftarkan"))
                         }
                     }
-                    else -> listener.onFailure(Error(response.message()))
+                    else -> listener.onFailure(Error("maaf tidak bisa register, mungkin email sudah pernah di daftarkan lewat login with google"))
                 }
             }
 

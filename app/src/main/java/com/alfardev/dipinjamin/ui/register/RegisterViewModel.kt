@@ -25,8 +25,8 @@ class RegisterViewModel (private val userRepository: UserRepository,
             return false
         }
 
-        if (!Constants.isAlpha(name)){
-            state.value = RegisterState.Validate(name = "nama hanya mengandung huruf saja")
+        if (!Constants.isAlphaAndSpace(name)){
+            state.value = RegisterState.Validate(name = "nama hanya mengandung huruf saja dan spasi saja")
             return false
         }
 
