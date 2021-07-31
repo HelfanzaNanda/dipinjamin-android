@@ -96,7 +96,14 @@ class UserRepository (private val api : ApiService) : UserContract{
                 response: Response<WrappedResponse<User>>
             ) {
                 when{
-                    response.isSuccessful -> listener.onSuccess(response.body()?.data)
+                    response.isSuccessful -> {
+                        val body = response.body()
+                        if (body?.status!!) {
+                            listener.onSuccess(body.data)
+                        }else{
+                            listener.onFailure(Error("akun sudah terdaftar"))
+                        }
+                    }
                     else -> listener.onFailure(Error("akun sudah terdaftar"))
                 }
             }
