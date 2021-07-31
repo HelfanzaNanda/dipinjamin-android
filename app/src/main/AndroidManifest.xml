@@ -16,9 +16,17 @@
         android:theme="@style/Theme.Dipinjamin.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.detail_my_order.DetailMyOrderActivity"
+            android:label="@string/title_activity_detail_my_order"
+            android:theme="@style/Theme.Dipinjamin.NoActionBar.NoActionBar"></activity>
+        <activity
+            android:name=".ui.DetailMyOrderActivity"
+            android:label="@string/title_activity_detail_my_order"
+            android:theme="@style/Theme.Dipinjamin.NoActionBar.NoActionBar" />
+        <activity
             android:name=".ui.my_orders.MyOrderActivity"
             android:label="@string/title_activity_my_order"
-            android:theme="@style/Theme.Dipinjamin.NoActionBar.NoActionBar"></activity>
+            android:theme="@style/Theme.Dipinjamin.NoActionBar.NoActionBar" />
         <activity
             android:name=".ui.checkout.CheckoutActivity"
             android:label="@string/title_activity_checkout"

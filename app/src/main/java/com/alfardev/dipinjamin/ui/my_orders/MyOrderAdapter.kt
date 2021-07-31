@@ -1,5 +1,6 @@
 package com.alfardev.dipinjamin.ui.my_orders
 
+import android.content.Intent
 import com.alfardev.dipinjamin.models.Checkout
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.alfardev.dipinjamin.R
+import com.alfardev.dipinjamin.ui.detail_my_order.DetailMyOrderActivity
 import kotlinx.android.synthetic.main.list_item_my_orders.view.*
 
 class MyOrderAdapter (private var orders : MutableList<Checkout>, private var myOrderAdapter: MyOrderListener)
@@ -28,6 +30,10 @@ class MyOrderAdapter (private var orders : MutableList<Checkout>, private var my
                 txt_category.text = checkout.book!!.category!!.category
                 txt_first_date.text = checkout.first_day_borrow
                 txt_last_date.text = checkout.last_day_borrow
+                setOnClickListener {
+                    myOrderListener.detail(checkout)
+
+                }
 //                btn_delete.setOnClickListener {
 //                    myOrderListener.delete(checkout)
 //                }

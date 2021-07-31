@@ -11,6 +11,8 @@ import com.alfardev.dipinjamin.repositories.TerritoryRepository
 import com.alfardev.dipinjamin.utils.ArrayResponse
 import com.alfardev.dipinjamin.utils.SingleLiveEvent
 import com.alfardev.dipinjamin.utils.SingleResponse
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 
 class ManagementAddressViewModel (private val deliveryAddressRepository: DeliveryAddressRepository,
 private val territoryRepository: TerritoryRepository) : ViewModel(){
@@ -35,48 +37,53 @@ private val territoryRepository: TerritoryRepository) : ViewModel(){
 
     private val deliveryAddressId = MutableLiveData<Int>()
 
+    private val isUpdateDeliveryAddress = MutableLiveData<Boolean>()
+
     private fun isLoading(b : Boolean){ state.value = ManagementAddressState.Loading(b) }
     private fun toast(message: String){ state.value = ManagementAddressState.ShowToast(message) }
     private fun success(){ state.value = ManagementAddressState.Success }
 
-    fun fetchProvinsi(){
-        isLoading(true)
-        territoryRepository.fetchProvinsi(object : ArrayResponse<Provinsi>{
-            override fun onSuccess(datas: List<Provinsi>?) {
-                isLoading(false)
-                datas?.let {provinsi.postValue(it) }
-            }
 
-            override fun onFailure(err: Error) {
-                isLoading(false)
-                println("error territory "+err.message.toString())
-                toast(err.message.toString())
-            }
+//    fun fetchProvinsi(){
+//        isLoading(true)
+//        territoryRepository.fetchProvinsi(object : ArrayResponse<Provinsi>{
+//            override fun onSuccess(datas: List<Provinsi>?) {
+//                isLoading(false)
+//                datas?.let {provinsi.postValue(it) }
+//            }
+//
+//            override fun onFailure(err: Error) {
+//                isLoading(false)
+//                println("error territory "+err.message.toString())
+//                toast(err.message.toString())
+//            }
+//
+//        })
+//    }
+//
+//    fun fetchKabupaten(id_provinsi : String){
+//        isLoading(true)
+//        territoryRepository.fetchKabupaten(id_provinsi, object : ArrayResponse<Kabupaten>{
+//            override fun onSuccess(datas: List<Kabupaten>?) {
+//                isLoading(false)
+//                datas?.let {
+//                    println("kabupaten "+it)
+//                    kabupaten.postValue(it)
+//                }
+//            }
+//
+//            override fun onFailure(err: Error) {
+//                isLoading(false)
+//                println("error territory "+err.message.toString())
+//                toast(err.message.toString())
+//            }
+//
+//        })
+//    }
 
-        })
-    }
-
-    fun fetchKabupaten(id_provinsi : String){
-        isLoading(true)
-        territoryRepository.fetchKabupaten(id_provinsi, object : ArrayResponse<Kabupaten>{
-            override fun onSuccess(datas: List<Kabupaten>?) {
-                isLoading(false)
-                datas?.let {
-                    println("kabupaten "+it)
-                    kabupaten.postValue(it)
-                }
-            }
-
-            override fun onFailure(err: Error) {
-                isLoading(false)
-                println("error territory "+err.message.toString())
-                toast(err.message.toString())
-            }
-
-        })
-    }
-
-    fun fetchKecamatan(id_kota : String){
+    fun fetchKecamatan(){
+        //id_kota = (3376).toString()
+        val id_kota = (3376).toString()
         isLoading(true)
         territoryRepository.fetchKecamatan(id_kota, object : ArrayResponse<Kecamatan>{
             override fun onSuccess(datas: List<Kecamatan>?) {
@@ -109,6 +116,9 @@ private val territoryRepository: TerritoryRepository) : ViewModel(){
     }
 
     fun createUpdate(token: String, deliveryAddress: DeliveryAddress){
+        val g = GsonBuilder().create()
+        val json = g.toJson(deliveryAddress)
+        println("delviert addresss " +json)
         isLoading(true)
         deliveryAddressRepository.createUpdateDeliveryAddress(token, deliveryAddress, object : SingleResponse<DeliveryAddress>{
             override fun onSuccess(data: DeliveryAddress?) {
@@ -186,6 +196,10 @@ private val territoryRepository: TerritoryRepository) : ViewModel(){
         deliveryAddressId.value = id
     }
 
+    fun setIsUpdateDeliveryAddress(b : Boolean){
+        isUpdateDeliveryAddress.value = b
+    }
+
 
     fun listenToState() = state
     fun listenToDeliveryAddresses() = deliveryAddresses
@@ -207,6 +221,8 @@ private val territoryRepository: TerritoryRepository) : ViewModel(){
     fun getKecamatanNames() = kecamatanNames.value
 
     fun getDeliveryAddressId() = deliveryAddressId.value
+
+    fun getIsUpdateDeliveryAddress() = isUpdateDeliveryAddress.value
 
 }
 

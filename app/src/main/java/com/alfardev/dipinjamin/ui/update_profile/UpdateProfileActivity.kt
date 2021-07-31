@@ -74,6 +74,7 @@ class UpdateProfileActivity : AppCompatActivity() {
     }
 
     private fun handleSuccess() {
+        showToast("berhasil update profile")
         finish()
     }
 

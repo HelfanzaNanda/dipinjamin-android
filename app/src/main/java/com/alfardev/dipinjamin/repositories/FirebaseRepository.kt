@@ -18,7 +18,10 @@ class FirebaseRepository : FirebaseContract{
                         listener.onSuccess(result)
                     } ?: kotlin.run { listener.onFailure(Error("Failed to get firebase token")) }
                 }
-                else -> listener.onFailure(Error("Cannot get firebase token"))
+                else -> {
+                    println("firebase onfailure "+it.exception?.message)
+                    listener.onFailure(Error("Cannot get firebase token"))
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.alfardev.dipinjamin.ui.my_orders
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alfardev.dipinjamin.R
 import com.alfardev.dipinjamin.models.Checkout
+import com.alfardev.dipinjamin.ui.detail_my_order.DetailMyOrderActivity
 import com.alfardev.dipinjamin.utils.Constants
 import com.alfardev.dipinjamin.utils.extensions.gone
 import com.alfardev.dipinjamin.utils.extensions.showToast
@@ -90,6 +92,17 @@ class MyOrderActivity : AppCompatActivity(), MyOrderListener {
 
     override fun delete(checkout: Checkout) {
         TODO("Not yet implemented")
+    }
+
+    override fun detail(checkout: Checkout) {
+        startActivity(Intent(this@MyOrderActivity, DetailMyOrderActivity::class.java). apply {
+            if (getPassedState()!! == "BORROWER"){
+                putExtra("IS_OWNER", false)
+            }else{
+                putExtra("IS_OWNER", true)
+            }
+            putExtra("CHECKOUT", checkout)
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

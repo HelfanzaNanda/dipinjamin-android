@@ -65,20 +65,21 @@ class ManagementAddressActivity : AppCompatActivity(), ManagementAddressListener
     private fun observe() {
         observeState()
         observeDeliveryAddresses()
-        observeProvinsi()
+        observeKecamatan()
+        //observeProvinsi()
     }
 
     private fun observeState() = managementAddressViewModel.listenToState().observer(this, Observer { handleUiState(it) })
     private fun observeDeliveryAddresses() = managementAddressViewModel.listenToDeliveryAddresses().observe(this, Observer { handleDeliveryAddresses(it) })
-    private fun observeProvinsi() = managementAddressViewModel.listenToProvinsi().observe(this, Observer { handleProvinsi(it) })
-    private fun observeKabupaten() = managementAddressViewModel.listenTokabupaten().observe(this, Observer { handleKabupaten(it) })
+//    private fun observeProvinsi() = managementAddressViewModel.listenToProvinsi().observe(this, Observer { handleProvinsi(it) })
+//    private fun observeKabupaten() = managementAddressViewModel.listenTokabupaten().observe(this, Observer { handleKabupaten(it) })
     private fun observeKecamatan() = managementAddressViewModel.listenToKecamatan().observe(this, Observer { handleKecamatan(it) })
     private fun observeAddress() = managementAddressViewModel.listenToDeliveryAddress().observe(this, Observer { handleDeliveryAddress(it) })
 
     private fun fetchDeliveryAddresses() = managementAddressViewModel.fetchDeliveryAddresses(Constants.getToken(this@ManagementAddressActivity))
-    private fun fetchProvinsi() = managementAddressViewModel.fetchProvinsi()
-    private fun fetchKabupaten(provinsi_id : String) = managementAddressViewModel.fetchKabupaten(provinsi_id)
-    private fun fetchKecamatan(kota_id : String) = managementAddressViewModel.fetchKecamatan(kota_id)
+    //private fun fetchProvinsi() = managementAddressViewModel.fetchProvinsi()
+    //private fun fetchKabupaten(provinsi_id : String) = managementAddressViewModel.fetchKabupaten(provinsi_id)
+    private fun fetchKecamatan() = managementAddressViewModel.fetchKecamatan()
 
     private fun setProvinsi(id : String, name : String) = managementAddressViewModel.setProvinsi(id, name)
     private fun setKabupaten(id : String, name : String) = managementAddressViewModel.setKabupaten(id, name)
@@ -89,6 +90,8 @@ class ManagementAddressActivity : AppCompatActivity(), ManagementAddressListener
     private fun setKecamatanNames(names: List<String>) = managementAddressViewModel.setKecamatanNames(names)
 
     private fun setDeliveryAddressId(id : Int) = managementAddressViewModel.setDeliveryAddressId(id)
+
+    private fun setIsUpdate(b : Boolean) = managementAddressViewModel.setIsUpdateDeliveryAddress(b)
 
     private fun getProvinsiId() = managementAddressViewModel.getProvinsiId()
     private fun getKabupatenId() = managementAddressViewModel.getKabupatenId()
@@ -104,55 +107,56 @@ class ManagementAddressActivity : AppCompatActivity(), ManagementAddressListener
     private fun getKecamatanNames() = managementAddressViewModel.getKecamatanNames()
 
     private fun getDeliveryAddressId() = managementAddressViewModel.getDeliveryAddressId()
+    private fun getIsUpdate() = managementAddressViewModel.getIsUpdateDeliveryAddress()
 
 
-    private fun handleProvinsi(list: List<Provinsi>?) {
-        list?.let {
-            val provinsi = mutableListOf(getString(R.string.choose_province))
-            it.map { p -> provinsi.add(p.name!!) }
-            setProvinsiNames(provinsi)
-
-            val adapter = ArrayAdapter(this@ManagementAddressActivity, android.R.layout.simple_spinner_item, provinsi )
-                    .apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
-            provinsi_spinner.adapter = adapter
-            provinsi_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) { }
-
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    if (provinsi[position] != getString(R.string.choose_province)){
-                        val selected_provinsi = it.find { p -> p.name == provinsi[position]  }
-                        setProvinsi(selected_provinsi!!.id.toString(), provinsi[position])
-                        fetchKabupaten(selected_provinsi.id.toString())
-                        observeKabupaten()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun handleKabupaten(list: List<Kabupaten>?) {
-        list?.let {
-            val kabupaten = mutableListOf(getString(R.string.choose_kab))
-            it.map { k -> kabupaten.add(k.name!!)  }
-            setKabupatenNames(kabupaten)
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, kabupaten )
-                    .apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
-            kabupaten_spinner.adapter = adapter
-
-            kabupaten_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) { }
-
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    if (kabupaten[position] != getString(R.string.choose_kab)){
-                        val selected_kabupaten = it.find { k -> k.name == kabupaten[position]  }
-                        setKabupaten(selected_kabupaten!!.id.toString(), kabupaten[position])
-                        fetchKecamatan(selected_kabupaten.id.toString())
-                        observeKecamatan()
-                    }
-                }
-            }
-        }
-    }
+//    private fun handleProvinsi(list: List<Provinsi>?) {
+//        list?.let {
+//            val provinsi = mutableListOf(getString(R.string.choose_province))
+//            it.map { p -> provinsi.add(p.name!!) }
+//            setProvinsiNames(provinsi)
+//
+//            val adapter = ArrayAdapter(this@ManagementAddressActivity, android.R.layout.simple_spinner_item, provinsi )
+//                    .apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+//            provinsi_spinner.adapter = adapter
+//            provinsi_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onNothingSelected(parent: AdapterView<*>?) { }
+//
+//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                    if (provinsi[position] != getString(R.string.choose_province)){
+//                        val selected_provinsi = it.find { p -> p.name == provinsi[position]  }
+//                        setProvinsi(selected_provinsi!!.id.toString(), provinsi[position])
+//                        fetchKabupaten(selected_provinsi.id.toString())
+//                        observeKabupaten()
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    private fun handleKabupaten(list: List<Kabupaten>?) {
+//        list?.let {
+//            val kabupaten = mutableListOf(getString(R.string.choose_kab))
+//            it.map { k -> kabupaten.add(k.name!!)  }
+//            setKabupatenNames(kabupaten)
+//            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, kabupaten )
+//                    .apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+//            kabupaten_spinner.adapter = adapter
+//
+//            kabupaten_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onNothingSelected(parent: AdapterView<*>?) { }
+//
+//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                    if (kabupaten[position] != getString(R.string.choose_kab)){
+//                        val selected_kabupaten = it.find { k -> k.name == kabupaten[position]  }
+//                        setKabupaten(selected_kabupaten!!.id.toString(), kabupaten[position])
+//                        fetchKecamatan(selected_kabupaten.id.toString())
+//                        observeKecamatan()
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private fun handleKecamatan(list: List<Kecamatan>?) {
         list?.let {
@@ -203,7 +207,7 @@ class ManagementAddressActivity : AppCompatActivity(), ManagementAddressListener
         if (bottomSheetBehavior!!.state == BottomSheetBehavior.STATE_EXPANDED)
             bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
         fetchDeliveryAddresses()
-        fetchProvinsi()
+        //fetchProvinsi()
         showToast(getString(R.string.message_change_data))
     }
 
@@ -226,25 +230,24 @@ class ManagementAddressActivity : AppCompatActivity(), ManagementAddressListener
             input_phone.setText(it.phone)
             input_address.setText(it.address)
             input_kode_pos.setText(it.kode_pos)
-            val province = getProvinsiNames()?.filter { s -> s == it.provinsi }?.get(0)
-            val kabupaten = getKabupatenNames()?.filter { s -> s == it.kabupaten }?.get(0)
             val kecamatan = getKecamatanNames()?.filter { s -> s == it.kecamatan }?.get(0)
-            println(kecamatan)
 //            provinsi_spinner.setSelection(getProvinsiNames()!!.indexOf(province))
 //            kabupaten_spinner.setSelection(getKabupatenNames()!!.indexOf(kabupaten))
-//            kecamatan_spinner.setSelection(getKecamatanNames()!!.indexOf(kecamatan))
+            //kecamatan_spinner.setSelection(getKecamatanNames()!!.indexOf(kecamatan))
         }
     }
 
     private fun createOrUpdate() {
         btn_save.setOnClickListener {
-            if (isUpdate()){
-                val deliveryAddress = setUpField()
-                deliveryAddress.id = getDeliveryAddressId()
-                managementAddressViewModel.createUpdate(Constants.getToken(this@ManagementAddressActivity), deliveryAddress)
-            }else{
-                val deliveryAddress = setUpField()
-                managementAddressViewModel.createUpdate(Constants.getToken(this@ManagementAddressActivity), deliveryAddress)
+            getIsUpdate()?.let { isUpdate ->
+                if(isUpdate){
+                    val deliveryAddress = setUpField()
+                    deliveryAddress.id = getDeliveryAddressId()
+                    managementAddressViewModel.createUpdate(Constants.getToken(this@ManagementAddressActivity), deliveryAddress)
+                }else{
+                    val deliveryAddress = setUpField()
+                    managementAddressViewModel.createUpdate(Constants.getToken(this@ManagementAddressActivity), deliveryAddress)
+                }
             }
         }
     }
@@ -252,10 +255,10 @@ class ManagementAddressActivity : AppCompatActivity(), ManagementAddressListener
     private fun setUpField(): DeliveryAddress {
         val name = input_name.text.toString().trim()
         val phone = input_phone.text.toString().trim()
-        val provinsi_id = getProvinsiId()
-        val provinsi_name = getProvinsiName()
-        val kabupaten_id = getKabupatenId()
-        val kabupaten_name = getKabupatenName()
+        val provinsi_id = "33"
+        val provinsi_name = "Jawa Tengah"
+        val kabupaten_id = "3376"
+        val kabupaten_name = "Kota Tegal"
         val kecamatan_id = getKecamatanId()
         val kecamatan_name = getKecamatanName()
         val address = input_address.text.toString().trim()
@@ -276,10 +279,9 @@ class ManagementAddressActivity : AppCompatActivity(), ManagementAddressListener
 
     }
 
-    private fun isUpdate() = intent.getBooleanExtra("IS_UPDATE", false)
-
     private fun addAddress() {
         fab_add_address.setOnClickListener {
+            setIsUpdate(false)
             resetField()
             if (bottomSheetBehavior!!.state == BottomSheetBehavior.STATE_COLLAPSED) {
                 bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
@@ -290,11 +292,12 @@ class ManagementAddressActivity : AppCompatActivity(), ManagementAddressListener
     }
 
     override fun edit(deliveryAddress: DeliveryAddress) {
+        setIsUpdate(true)
         resetField()
         setDeliveryAddressId(deliveryAddress.id!!)
-        fetchKabupaten(deliveryAddress.provinsi_id!!)
-        observeKabupaten()
-        fetchKecamatan(deliveryAddress.kabupaten_id!!)
+        //fetchKabupaten(deliveryAddress.provinsi_id!!)
+        //observeKabupaten()
+        fetchKecamatan()
         observeKecamatan()
         getDeliveryAddress(deliveryAddress.id.toString())
         observeAddress()
@@ -318,7 +321,8 @@ class ManagementAddressActivity : AppCompatActivity(), ManagementAddressListener
     override fun onResume() {
         super.onResume()
         fetchDeliveryAddresses()
-        fetchProvinsi()
+        fetchKecamatan()
+        //fetchProvinsi()
     }
 
 

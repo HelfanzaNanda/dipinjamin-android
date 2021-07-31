@@ -102,12 +102,14 @@ interface ApiService{
         @Header("Authorization") token : String
     ) : Call<WrappedResponse<User>>
 
+    @FormUrlEncoded
     @POST("user/password")
     fun updatePassword(
         @Header("Authorization") token : String,
         @Field("password") password : String
     ) : Call<WrappedResponse<User>>
 
+    @FormUrlEncoded
     @POST("user")
     fun updateProfile(
         @Header("Authorization") token : String,

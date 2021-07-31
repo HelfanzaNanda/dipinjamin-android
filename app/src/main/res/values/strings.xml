@@ -155,4 +155,6 @@
     </string-array>
     <string name="title_activity_my_order">MyOrderActivity</string>
     <string name="book_by_category">Buku By Kategori</string>
+    <string name="text_book_delete">Hapus</string>
+    <string name="title_activity_detail_my_order">DetailMyOrderActivity</string>
 </resources>

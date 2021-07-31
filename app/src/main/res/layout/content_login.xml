@@ -1,135 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_margin="15dp"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="10dp"
-        android:hint="Email"
-        app:boxBackgroundColor="@android:color/transparent"
-        app:errorEnabled="true"
-        android:id="@+id/error_email"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
+            android:hint="Email"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorEnabled="true"
+            android:id="@+id/error_email"
             android:layout_width="match_parent"
-            android:id="@+id/input_email"
-            android:inputType="textEmailAddress"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/input_email"
+                android:inputType="textEmailAddress"
+                android:layout_height="wrap_content"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginBottom="20dp"
-        android:layout_below="@id/error_email"
-        android:hint="Passowrd"
-        app:boxBackgroundColor="@android:color/transparent"
-        app:errorEnabled="true"
-        app:passwordToggleEnabled="true"
-        android:id="@+id/error_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="20dp"
+            android:layout_below="@id/error_email"
+            android:hint="Passowrd"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            android:id="@+id/error_password"
             android:layout_width="match_parent"
-            android:id="@+id/input_password"
-            android:inputType="textPassword"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/input_password"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_marginBottom="15dp"
-        android:shadowRadius="8"
-        android:backgroundTint="@color/grey"
-        android:layout_below="@id/error_password"
-        android:id="@+id/btn_login"
-        app:cornerRadius="6dp"
-        android:text="Login"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_dont_have_account"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        android:layout_below="@id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+            android:layout_marginBottom="15dp"
+            android:shadowRadius="8"
+            android:backgroundTint="@color/grey"
+            android:layout_below="@id/error_password"
+            android:id="@+id/btn_login"
+            app:cornerRadius="6dp"
+            android:text="Login"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"/>
+
+        <LinearLayout
+            android:id="@+id/layout_dont_have_account"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginEnd="6dp"
+                android:text="Belum Punya Akun ?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/btn_register_now"
+                android:textColor="@color/red"
+                android:text="Daftar Sekarang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
         <TextView
-            android:layout_marginEnd="6dp"
-            android:text="Belum Punya Akun ?"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/btn_register_now"
+            android:id="@+id/btn_forgot_password"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/layout_dont_have_account"
             android:textColor="@color/red"
-            android:text="Daftar Sekarang"
+            android:text="Lupa Password?"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_divider"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/btn_forgot_password"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/btn_forgot_password"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@id/layout_dont_have_account"
-        android:textColor="@color/red"
-        android:text="Lupa Password?"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <View
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.6"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/green"/>
 
-    <LinearLayout
-        android:id="@+id/layout_divider"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        android:layout_below="@id/btn_forgot_password"
-        android:weightSum="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_weight="0.8"
+                android:text="atau Login dengan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
 
-        <View
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.6"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/green"/>
+            <View
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.6"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/green"/>
 
-        <TextView
-            android:gravity="center_horizontal|center_vertical"
-            android:layout_weight="0.8"
-            android:text="atau Login dengan"
-            android:layout_width="0dp"
+        </LinearLayout>
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_login_google"
+            android:layout_below="@id/layout_divider"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <View
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.6"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/green"/>
 
-    </LinearLayout>
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btn_login_google"
-        android:layout_below="@id/layout_divider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
 
-    <ProgressBar
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        android:id="@+id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+</ScrollView>

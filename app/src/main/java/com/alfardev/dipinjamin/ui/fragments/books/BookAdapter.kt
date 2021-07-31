@@ -8,24 +8,27 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.alfardev.dipinjamin.R
 import com.alfardev.dipinjamin.models.Book
-import kotlinx.android.synthetic.main.list_item_home.view.*
+import kotlinx.android.synthetic.main.list_item_my_book.view.*
 
-class BookAdapter (private val books : MutableList<Book>, private val context: Context)
+class BookAdapter (private val books : MutableList<Book>, private val bookListener: BookListener)
     : RecyclerView.Adapter<BookAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_book, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_my_book, parent, false))
     }
 
     override fun getItemCount() = books.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(books[position], context)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(books[position], bookListener)
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        fun bind(book: Book, context: Context){
+        fun bind(book: Book, bookListener: BookListener){
             with(itemView){
                 book_image.load(book.image)
                 book_name.text = book.title
+                btn_book_delete.setOnClickListener {
+                    bookListener.delete(book)
+                }
             }
         }
     }

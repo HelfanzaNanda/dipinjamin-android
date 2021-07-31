@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_book.view.*
 import kotlinx.android.synthetic.main.unauthorized.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class BookFragment : Fragment(){
+class BookFragment : Fragment(), BookListener{
 
     private val bookViewModel : BookViewModel by viewModel()
 
@@ -53,7 +54,7 @@ class BookFragment : Fragment(){
 
     private fun setUpRecycler(){
         requireView().recycler_view.apply {
-            adapter = BookAdapter(mutableListOf(), requireActivity())
+            adapter = BookAdapter(mutableListOf(), this@BookFragment)
             layoutManager = GridLayoutManager(requireActivity(), 2)
         }
     }
@@ -71,14 +72,15 @@ class BookFragment : Fragment(){
         list?.let {
             if (it.isNotEmpty()){
                 requireView().layout_not_found.gone()
+                requireView().recycler_view.visible()
                 requireView().recycler_view.adapter?.let { adapter ->
                     if (adapter is BookAdapter) adapter.updateList(it)
                 }
             }else{
+                requireView().recycler_view.gone()
                 requireView().layout_not_found.visible()
             }
         }
-
     }
 
     private fun handleUiState(bookState: BookState?) {
@@ -86,8 +88,14 @@ class BookFragment : Fragment(){
             when(it){
                 is BookState.Loading -> handleLoading(it.state)
                 is BookState.ShowToast -> requireActivity().showToast(it.message)
+                is BookState.SuccessDelete -> handleSuccessDelete()
             }
         }
+    }
+
+    private fun handleSuccessDelete() {
+        requireActivity().showToast("berhasil delete buku")
+        fetchMyBooks()
     }
 
     private fun handleLoading(state: Boolean) {
@@ -102,5 +110,18 @@ class BookFragment : Fragment(){
         if (isLoggedIn()){
             fetchMyBooks()
         }
+    }
+
+    override fun delete(book: Book) {
+        AlertDialog.Builder(requireActivity()).apply {
+            setMessage("apakah anda yakin?")
+            setNegativeButton("Tidak"){dialog, _ ->
+                dialog.dismiss()
+            }
+            setPositiveButton("Ya"){dialog, _ ->
+                bookViewModel.deleteBook(Constants.getToken(requireActivity()), book.id!!)
+                dialog.dismiss()
+            }
+        }.show()
     }
 }

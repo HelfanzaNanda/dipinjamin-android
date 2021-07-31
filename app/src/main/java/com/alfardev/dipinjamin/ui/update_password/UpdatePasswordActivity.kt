@@ -66,6 +66,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
     }
 
     private fun handleSuccess() {
+        showToast("berhasil update password")
         finish()
     }
 

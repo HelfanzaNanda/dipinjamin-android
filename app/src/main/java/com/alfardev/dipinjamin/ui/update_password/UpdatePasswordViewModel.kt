@@ -34,17 +34,22 @@ class UpdatePasswordViewModel (private val userRepository: UserRepository) : Vie
     }
 
     fun updatePassword(token : String, password : String){
-        isLoading(false)
+//        println("token user" +token)
+//        println("pass user" +password)
+        isLoading(true)
+
         userRepository.updatePassword(token, password, object : SingleResponse<User>{
             override fun onSuccess(data: User?) {
                 isLoading(false)
-                data?.let { success() }
+                success()
+//                data?.let { success() }
             }
 
             override fun onFailure(err: Error) {
                 isLoading(false)
                 toast(err.message.toString())
             }
+
         })
     }
 

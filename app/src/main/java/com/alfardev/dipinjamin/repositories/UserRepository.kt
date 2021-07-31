@@ -121,14 +121,18 @@ class UserRepository (private val api : ApiService) : UserContract{
     }
 
     override fun updatePassword(token: String, password: String, listener: SingleResponse<User>) {
+        println("token user "+token)
+        println("password user "+password)
         api.updatePassword(token, password).enqueue(object : Callback<WrappedResponse<User>>{
             override fun onFailure(call: Call<WrappedResponse<User>>, t: Throwable) {
+                println("res onfailure "+t.message)
                 listener.onFailure(Error(t.message))
             }
 
             override fun onResponse(call: Call<WrappedResponse<User>>, response: Response<WrappedResponse<User>>) {
                 when{
                     response.isSuccessful -> {
+                        println("res success " + response.isSuccessful)
                         val b = response.body()
                         if (b?.status!!) {
                             listener.onSuccess(b.data)
@@ -136,7 +140,10 @@ class UserRepository (private val api : ApiService) : UserContract{
                             listener.onFailure(Error(b.message))
                         }
                     }
-                    else -> listener.onFailure(Error(response.message()))
+                    else -> {
+                        println("res not success " + response.message())
+                        listener.onFailure(Error(response.message()))
+                    }
                 }
             }
 
